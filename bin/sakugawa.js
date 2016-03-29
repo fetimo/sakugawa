@@ -110,12 +110,14 @@ if (args._) {
     console.log('Reading ' + file);
     const styles = fs.readFileSync(file, 'utf8');
     const pages = sakugawa(styles, opts);
-    pages.forEach(function eachPages(page, index) {
-      // page is a CSS string
-      const pageFile = file.replace(/\.css$/, args.s + (index + 1) + '.css');
-      console.log('Writing ' + pageFile);
-      fs.writeFileSync(pageFile, page, 'utf8');
-    });
+    if (pages.length > 1) {
+      pages.forEach(function eachPages(page, index) {
+          // page is a CSS string
+          const pageFile = file.replace(/\.css$/, args.s + (index + 1) + '.css');
+          console.log('Writing ' + pageFile);
+          fs.writeFileSync(pageFile, page, 'utf8');
+      });
+    }
   });
 }
 else {
